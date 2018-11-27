@@ -2,9 +2,14 @@
 
 const express = require('express'),
 	stylus = require('stylus'),
-	serve = require('express-static');
+	serve = require('express-static'),
+	enforce = require('express-sslify');
 
 const app = express();
+
+if (process.env.NODE_ENV === 'production') {
+	app.use(enforce.HTTPS({ trustProtoHeader: true }));
+}
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
