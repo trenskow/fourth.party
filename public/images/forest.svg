@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="928px" height="471px" viewBox="0 0 928 471" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>forest</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="928" height="471"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="forest-2">
+            <g id="forest">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Rectangle" fill="#2F87B7" fill-rule="nonzero" xlink:href="#path-1"></use>
+                <ellipse id="Oval" fill="#2FCA65" fill-rule="nonzero" mask="url(#mask-2)" cx="464" cy="541.5" rx="767" ry="212.5"></ellipse>
+            </g>
+        </g>
+    </g>
+</svg>

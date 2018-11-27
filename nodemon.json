@@ -1,0 +1,7 @@
+{
+	"ignore": ["public/*", "node_modules/*"],
+	"verbose": true,
+	"events": {
+		"restart": "node node_modules/webpack-cli/bin/cli.js"
+	}
+}

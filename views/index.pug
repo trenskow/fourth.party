@@ -1,0 +1,37 @@
+html
+	head
+		title fourth.party
+		link(rel='stylesheet',href='/css/main.css')
+		link(rel='stylesheet',href='https://fonts.googleapis.com/css?family=Lato:300,400|Montserrat:300,400')
+		script(type='text/javascript',src='/scripts/app.js')
+	body
+		div#container
+			header
+			div#welcome
+				div#intro
+					h1 Two factor authentication.
+					h2 Outsourced.
+				div#create
+					h1 Create Application
+					form#appform
+						fieldset
+							input(type='text',id='appname',placeholder='Your application name')
+							p.error#errorname This is an error
+						fieldset
+							input(type='text',id='name',placeholder='Your name')
+							p.error#errorcontactname This is an error
+							input(type='text',id='email',placeholder='Your e-mail')
+							p.error#errorcontactemail This is an error
+						fieldset
+							input(type='submit',value='Create Application')
+				div#success
+					p An e-mail has been sent containing the application identifier and an API key.
+					p Enjoy!
+			div#description
+				h1 What is Fourth Party?
+				p Forth Party is a service that implements simple two factor authentication.  It enables other services to outsource their two factor authentication in a safe, simple and secure way.
+				h1 How does it work?
+				p Fourth Party is a simple REST API. It’s a REST implementation of the TOTP and HOTP protocols.
+				p Once you have created your application, you are able to create your own users using the APIs. You would typically implement username and password check on your own service, and use Fourth Party to authenticate the second factor. Once you have created your user, you are able to download a QR code, which you can present to your user for them to add to their favorite authentication app. From here, code generated from the authentication app can be validated using the APIs.
+				h1 Why use Fourth Party?
+				p The main reason for using Fourth Party is to add an extra layer of security to your users authentication. By outsourcing the second factor, you don’t have to store any secrets, recovery codes, etc. on your own services. This means that there is an actual authentication layer that is outside of your own service’s infrastructure, which makes it harder for outsiders to comprimise your users, and it does this without adding more complexity to their authentication flow.
