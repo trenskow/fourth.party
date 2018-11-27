@@ -23,7 +23,7 @@ module.exports = {
 								'targets': { node: 'current' }
 							}]
 						],
-						sourceMap: true
+						sourceMap: process.env.NODE_ENV !== 'production'
 					}
 				}
 			}
