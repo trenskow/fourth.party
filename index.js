@@ -28,6 +28,10 @@ app.get('/', (req, res) => {
 	res.render('index');
 });
 
+app.get('/terms/', (req, res) => {
+	res.render('terms');
+});
+
 app.use(serve(__dirname + '/public'));
 
 app.listen(process.env.PORT || 3001);

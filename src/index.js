@@ -10,6 +10,8 @@ const axios = require('axios');
 
 			event.preventDefault();
 
+			if (!document.getElementById('agree').checked) return;
+
 			const allVisibleErrors = document.getElementsByClassName('visible');
 
 			for (let idx = 0 ; idx < allVisibleErrors.length ; idx++) {

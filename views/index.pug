@@ -1,6 +1,6 @@
 html
 	head
-		title fourth.party
+		title the.fourth.party
 		link(rel='stylesheet',href='/css/main.css')
 		link(rel='stylesheet',href='https://fonts.googleapis.com/css?family=Lato:300,400|Montserrat:300,400')
 		script(type='text/javascript',src='/scripts/app.js')
@@ -23,18 +23,21 @@ html
 							input(type='text',id='email',placeholder='Your e-mail')
 							p.error#errorcontactemail This is an error
 						fieldset
+							label #[input(type='checkbox',id='agree')]I agree to the #[a(href="/terms/") terms of service]
+								
+						fieldset
 							input(type='submit',value='Create Application')
 				div#success
 					p An e-mail has been sent containing the application identifier and an API key.
 					p Enjoy!
 			div#description
-				h1 What is Fourth Party?
+				h1 What is the.fourth.party?
 				p Forth Party is a service that implements simple two factor authentication.  It enables other services to outsource their two factor authentication in a safe, simple and secure way.
 				h1 How does it work?
-				p Fourth Party is a simple REST API. It’s a REST implementation of the TOTP and HOTP protocols.
-				p Once you have created your application, you are able to create your own users using the APIs. You would typically implement username and password check on your own service, and use Fourth Party to authenticate the second factor. Once you have created your user, you are able to download a QR code, which you can present to your user for them to add to their favorite authentication app. From here, code generated from the authentication app can be validated using the APIs.
-				h1 Why use Fourth Party?
-				p The main reason for using Fourth Party is to add an extra layer of security to your users authentication. By outsourcing the second factor, you don’t have to store any secrets, recovery codes, etc. on your own services. This means that there is an actual authentication layer that is outside of your own service’s infrastructure, which makes it harder for outsiders to comprimise your users, and it does this without adding more complexity to their authentication flow.
+				p the.fourth.party is a simple REST API. It’s a REST implementation of the TOTP and HOTP protocols.
+				p Once you have created your application, you are able to create your own users using the APIs. You would typically implement username and password check on your own service, and use the.fourth.party to authenticate the second factor. Once you have created your user, you are able to download a QR code, which you can present to your user for them to add to their favorite authentication app. From here, code generated from the authentication app can be validated using the APIs.
+				h1 Why use the.fourth.party?
+				p The main reason for using the.fourth.party is to add an extra layer of security to your users authentication. By outsourcing the second factor, you don’t have to store any secrets, recovery codes, etc. on your own services. This means that there is an actual authentication layer that is outside of your own service’s infrastructure, which makes it harder for outsiders to comprimise your users, and it does this without adding more complexity to their authentication flow.
 				h1 Open source
 				p The whole thing is available as open source, and can be accessed #[a(href="https://github.com/trenskow/api.fourth.party") through Github].
 		div#container2
@@ -71,11 +74,11 @@ html
 							]
 						}
 					}
-				p This will give you the new user acompanied by a lot of recovery codes. 31 are returned in total, whereas 30 of them are designated for you to forward to your user. The last one we will use to generate a QR code with the secret.
+				p This will give you the new user acompanied by a lot of recovery codes. 31 are returned in total, whereas 30 of them are designated for you to forward to your user. The last one we will use to generate a QR code with the secret. You decide which of the recovery codes you want to use for this.
 				p Once a recovery code has been used, it is not longer available for usage.
 				h1 Getting the secret as a QR code
-				p Once our user is created, we take one of the users recovery codes and use it for generating a QR code containing the users secret. This is the only way you can get the secret out. Your user must identify either by using a recovery code or a authentication token to generate the QR code.
-				p The recovery codes are hashed in the database, so only these returned after user creation are the only plain text version that exists.
+				p Once the user is created, you take one of the user's recovery codes and use it for generating a QR code containing the user's secret. This is the only way you can get the secret. Your user must identify either by using a recovery code or an authentication token to generate the QR code.
+				p The recovery codes are hashed in the database, so these in the response are the only plain text versions that exists. Therefore it is important to hand them to the user, so your user can store them in a safe place.
 				h2 Request
 				p The QR code is requested like this.
 				pre.
@@ -91,8 +94,8 @@ html
 				p Now you can display the QR code for the user to scan in his/her favorite authentication app.
 				p Supported formats are png, svg, eps and pdf.
 				h1 Verifying tokens
-				p Now that your user is completely setup, it is time to verify tokens. It is always a good idea &mdash; after initial setup &mdash; to ask you user to enter the current token. Just to confirm that everything went alright.
-				p You verify a token by calling a simple endpoint.
+				p Now that your user is completely setup, it is time to verify tokens. It is always a good idea &mdash; after initial setup &mdash; to ask your user to enter the current token &mdash; just to confirm that everything went alright.
+				p You verify a token by calling this simple endpoint.
 				h2 Request
 				pre.
 					GET /applications/[your-app-id]/users/[user-id]/tokens/[token] HTTP/1.1
