@@ -9,8 +9,8 @@ html
 			header
 			div#welcome
 				div#intro
-					h1 Two factor authentication.
-					h2 Outsourced.
+					h2 Two factor authentication.
+					h1 Outsourced.
 				div#create
 					h1 Create Application
 					form#appform
@@ -35,3 +35,97 @@ html
 				p Once you have created your application, you are able to create your own users using the APIs. You would typically implement username and password check on your own service, and use Fourth Party to authenticate the second factor. Once you have created your user, you are able to download a QR code, which you can present to your user for them to add to their favorite authentication app. From here, code generated from the authentication app can be validated using the APIs.
 				h1 Why use Fourth Party?
 				p The main reason for using Fourth Party is to add an extra layer of security to your users authentication. By outsourcing the second factor, you don’t have to store any secrets, recovery codes, etc. on your own services. This means that there is an actual authentication layer that is outside of your own service’s infrastructure, which makes it harder for outsiders to comprimise your users, and it does this without adding more complexity to their authentication flow.
+				h1 Open source
+				p The whole thing is available as open source, and can be accessed #[a(href="https://github.com/trenskow/api.fourth.party") through Github].
+		div#container2
+			div#howto
+				h1 Get started
+				p Once you have your application identifier and your API key &mdash; which is provided to you by e-mail after creating your application &mdash; you are readu to begin to create users.
+				h1 Creating users
+				h2 Request
+				p This creates a new user.
+				p The only thing you need to provide is an identifier.
+				pre.
+					POST /applications/[your-app-id]/users/ HTTP/1.1
+					Host: api.fourth.party
+					X-API-Key: [your-api-key]
+					Content-Type: application/json
+					
+					{
+						 "identifier": "[your-user's-id]"
+					}
+				h2 Response
+				pre.
+					
+					HTTP/1.1 201 Created
+					Content-Type: application/json; encoding=utf-8
+					
+					{
+						"identifier": "[your-user's-id]",
+						"recovery": {
+							"left": 31
+							"codes": [
+								"1234-5678",
+								"abcd-efgh",
+								...
+							]
+						}
+					}
+				p This will give you the new user acompanied by a lot of recovery codes. 31 are returned in total, whereas 30 of them are designated for you to forward to your user. The last one we will use to generate a QR code with the secret.
+				p Once a recovery code has been used, it is not longer available for usage.
+				h1 Getting the secret as a QR code
+				p Once our user is created, we take one of the users recovery codes and use it for generating a QR code containing the users secret. This is the only way you can get the secret out. Your user must identify either by using a recovery code or a authentication token to generate the QR code.
+				p The recovery codes are hashed in the database, so only these returned after user creation are the only plain text version that exists.
+				h2 Request
+				p The QR code is requested like this.
+				pre.
+					GET /applications/[your-app-id]/users/[user-id]/qr-code?authorization=[recovery-code-or-token]&amp;format=png HTTP/1.1
+					Host: api.fourth.party
+					X-API-Key: [your-api-key]
+				h2 Response
+				pre.
+					HTTP/1.1 200 OK
+					Content-Type: image/png
+					
+					[qr-code-binary-data]
+				p Now you can display the QR code for the user to scan in his/her favorite authentication app.
+				p Supported formats are png, svg, eps and pdf.
+				h1 Verifying tokens
+				p Now that your user is completely setup, it is time to verify tokens. It is always a good idea &mdash; after initial setup &mdash; to ask you user to enter the current token. Just to confirm that everything went alright.
+				p You verify a token by calling a simple endpoint.
+				h2 Request
+				pre.
+					GET /applications/[your-app-id]/users/[user-id]/tokens/[token] HTTP/1.1
+					Host: api.fourth.party
+				h2 Successful response (the token is valid)
+				p If the validation is successful, the following is responded.
+				pre.
+					HTTP/1.1 204 No Content
+				h2 Unsuccessful response (the token is wrong or invalid)
+				p If the validation is a failure, the following is responded.
+				pre.
+					HTTP/1.1 404 Not Found
+				h1 Regenerating recovery codes
+				p If your users should come in a situation where all recovery codes are about to be used, there is an endpoint for generating a complete new set of recovery codes.
+				h2 Request
+				pre.
+					PUT /applications/[your-app-id]/users/[user-id]/recovery-codes/?authorization=[recovery-code-or-token] HTTP/1.1
+					Host: api.fourth.party
+				h2 Response
+				p This generates a new set of recovery codes, which can be given to the user.
+				pre.
+					HTTP/1.1 200 OK
+					Content-Type: application/json; encoding=utf-8
+					
+					{
+						"left": 30,
+						"codes": [
+							"1234-5678",
+							"abcd-efgh",
+							...
+						]
+					}
+				p Once again, these are the only plain text versions that exists of the recovery codes, so be sure to forward them to your user, who must save them in a safe place.
+				h1 That's it!
+				p Give it a try &mdash; if you want to &mdash; and feel free to leave feedback #[a(href="https://github.com/trenskow/api.fourth.party/issues") at the Github repository].
+				p.small &copy; Copyright 2018 by Kristian Trenskow
